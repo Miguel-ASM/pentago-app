@@ -31,6 +31,9 @@ body {
   outline: none;
 }
 
+.square:hover {
+  cursor: pointer
+}
 
 
 /*CSS attributes of the tables*/

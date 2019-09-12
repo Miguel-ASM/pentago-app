@@ -147,24 +147,26 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      history: [
-        {
-          squares: Array(9).fill(null),
-          position: null
-        }
-      ],
-      stepNumber: 0,
-      xIsNext: true,
-      ascendingOrder: true,
+      squares: Array(9).fill(null),
+      xIsNext: true
     };
+    /*Bind functions*/
+    this.handleClick = this.handleClick.bind(this);
+    this.resetGame = this.resetGame.bind(this)
   }
 
+  /*HANDLELERS*/
 
+  /*Add a method to reset the game*/
+  resetGame() {
+    this.setState({
+      squares: Array(9).fill(null),
+      xIsNext: true
+    });
+  }
   /*handle a click on a square*/
   handleClick(i) {
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
-    const current = history[history.length - 1];
-    const squares = current.squares.slice();
+    const squares = this.state.squares.slice();
 
     /*Change the state of the squares*/
     if (calculateWinner(squares) || squares[i]) {
@@ -172,18 +174,17 @@ class Game extends React.Component {
     }
     squares[i] = this.state.xIsNext ? "X" : "O";
     this.setState({
-      history: history.concat([
-        {
-          squares: squares,
-          position: [1+i%6,1+Math.floor(i/6)]
-        }
-      ]),
-      stepNumber: history.length,
+      squares: squares,
       xIsNext: !(this.state.xIsNext)
     });
   }
 
-  /*rotations of the squares*/
+  /*sub-board index to board index*/
+  subToBoard(n,m,p){
+    return 6*(n+3*Math.floor(p/3)) + 3*(p%3) + m
+  }
+
+  /*rotations of the squares in a sub-board*/
   left(i) {
     const arr = [1,2,5,0,4,8,3,6,7]
     return arr[i]
@@ -194,35 +195,87 @@ class Game extends React.Component {
     return arr[i]
   }
 
-  
-
+  /*rotation of the squares in the complete board*/
   rotateLeft(row,col) {
-    /*row,col are the row and colu indexes of the subTable*/
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
-    const current = history[history.length - 1];
+    /*row,col are the row and column indexes of the subTable*/
+    const squares = [];
+    const indexes = [];
+    const p = 0;
 
-    /*Array Destructuring*/
-    [] = [];
+    for(let i = 0;i<9;i++){
+      indexes.push(this.subToBoard(row,col,i));
+    }
 
+    for(let n = 0;n<36;n++){
+      if (indexes.includes(n)){
+        squares.push(this.squares[this.subToBoard(row,col,this.left(p))]);
+        p++;
+      } else {
+        squares.push(this.squares[n]);
+      }
+      this.setState({squares: squares})
+    }
   }
 
-  rotateRight(n,m) {
+  rotateRight(row,col) {
+    /*row,col are the row and column indexes of the subTable*/
+    const squares = [];
+    const indexes = [];
+    const p = 0;
 
+    for(let i = 0;i<9;i++){
+      indexes.push(this.subToBoard(row,col,i));
+    }
+
+    for(let n = 0;n<36;n++){
+      if (indexes.includes(n)){
+        squares.push(this.squares[this.subToBoard(row,col,this.right(p))]);
+        p++;
+      } else {
+        squares.push(this.squares[n]);
+      }
+      this.setState({squares: squares})
+    }
   }
 
-  render(){
 
-    const history = this.state.history;
-    const current = history[this.state.stepNumber];
-    const winner = calculateWinner(current.squares);
 
+
+
+
+  /*RENDER*/
+
+  render() {
+    const squares = this.state.squares.slice();
+    const winner = calculateWinner(squares);
+
+    let status;
+    if (winner) {
+      status = "Winner: " + winner;
+    } else if (!squares.includes(null)) {
+      status = "It's a tie!!!"
+    } else {
+      status = "Next player: " + (this.state.xIsNext ? "X" : "O");
+    }
 
     return (
-      <div className="board">
-        <Board
-          squares = {current.squares}
-          onClick = {(i)=>this.handleClick(i)}
-        />
+      <div className="game">
+        <div>
+          <div className="game-board">
+            <Board
+              squares={squares}
+              onClick={this.handleClick}
+            />
+            <div className="reset-button">
+              <button onClick = {this.resetGame}>
+                  Reset
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="game-info">
+          <div>{status}</div>
+        </div>
       </div>
     );
   }
