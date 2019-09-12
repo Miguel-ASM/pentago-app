@@ -33,6 +33,8 @@ function Square(props) {
 
 class Board extends React.Component {
 
+  /*Receives from Game the props: onClick, squares*/
+
   /*Function that checks if square[i] is in the winner line*/
   squareIsWinner(n){
     const lines = [
@@ -141,6 +143,7 @@ class Board extends React.Component {
 
 class Game extends React.Component {
 
+  /*Constructor of the class*/
   constructor(props) {
     super(props);
     this.state = {
@@ -156,10 +159,14 @@ class Game extends React.Component {
     };
   }
 
+
+  /*handle a click on a square*/
   handleClick(i) {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
+
+    /*Change the state of the squares*/
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
@@ -176,6 +183,32 @@ class Game extends React.Component {
     });
   }
 
+  /*rotations of the squares*/
+  left(i) {
+    const arr = [1,2,5,0,4,8,3,6,7]
+    return arr[i]
+  }
+
+  right(i) {
+    const arr = [3,0,1,6,4,2,7,8,5]
+    return arr[i]
+  }
+
+  
+
+  rotateLeft(row,col) {
+    /*row,col are the row and colu indexes of the subTable*/
+    const history = this.state.history.slice(0, this.state.stepNumber + 1);
+    const current = history[history.length - 1];
+
+    /*Array Destructuring*/
+    [] = [];
+
+  }
+
+  rotateRight(n,m) {
+
+  }
 
   render(){
 

@@ -1,18 +1,22 @@
+body {
+  padding: 50px
+}
+
 
 /*CSS attributes of the square*/
 .square {
-  border: 5px solid black;
+  border: 2.5px solid black;
   font: "Comic Sans MS", cursive, sans-serif;
   float: left;
   font-size: 100px;
   font-weight: bold;
   line-height: 34px;
-  height: 150px;
+  height: 75px;
   margin-right: 0px;
   margin-top: 0px;
   padding: 0;
   text-align: center;
-  width: 150px;
+  width: 75px;
 }
 
 .square.square-isWinner {
@@ -41,7 +45,7 @@ table {
 }
 
 table.subTable {
-  border:15px solid
+  border:5px solid
 }
 
 table.Table {
