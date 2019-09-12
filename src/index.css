@@ -1,13 +1,49 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
+/*CSS attributes of the square*/
+.square {
+  border: 5px solid black;
+  font: "Comic Sans MS", cursive, sans-serif;
+  float: left;
+  font-size: 100px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 150px;
+  margin-right: 0px;
+  margin-top: 0px;
+  padding: 0;
+  text-align: center;
+  width: 150px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+.square.square-isWinner {
+  background: white;
+}
+
+.square.square-isLooser {
+  background: green;
+}
+
+.square:focus {
+  outline: none;
+}
+
+
+
+/*CSS attributes of the tables*/
+td{
+  padding:0 ;
+}
+tr{
+  padding:0 ;
+}
+table {
+  border-collapse: collapse;
+}
+
+table.subTable {
+  border:15px solid
+}
+
+table.Table {
+  border: 0px solid
 }
