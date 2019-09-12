@@ -16,8 +16,5 @@
  
  The winner is the first player to connect 5 of their marbles before or after the 90 degrees rotation. Note, that a rotation of one player could give the victory to the other (upsy daisy!!!!)
  
- 
- 
- 
- 
- ![The Pentago board](https://en.wikipedia.org/wiki/Pentago#/media/File:Pentago-Game-Winning-Position.jpg)
+<img src="https://upload.wikimedia.org/wikipedia/commons/b/be/Pentago-Game-Winning-Position.jpg" 
+alt="Pentago" width="240" height="180" border="10" />
