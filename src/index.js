@@ -200,7 +200,7 @@ class Game extends React.Component {
     /*row,col are the row and column indexes of the subTable*/
     const squares = [];
     const indexes = [];
-    const p = 0;
+    let p = 0;
 
     for(let i = 0;i<9;i++){
       indexes.push(this.subToBoard(row,col,i));
@@ -221,7 +221,7 @@ class Game extends React.Component {
     /*row,col are the row and column indexes of the subTable*/
     const squares = [];
     const indexes = [];
-    const p = 0;
+    let p = 0;
 
     for(let i = 0;i<9;i++){
       indexes.push(this.subToBoard(row,col,i));
