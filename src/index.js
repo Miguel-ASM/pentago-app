@@ -148,7 +148,8 @@ class Game extends React.Component {
     super(props);
     this.state = {
       squares: Array(9).fill(null),
-      xIsNext: true
+      xIsNext: true,
+      rotationIsActive: false
     };
     /*Bind functions*/
     this.handleClick = this.handleClick.bind(this);
@@ -161,7 +162,8 @@ class Game extends React.Component {
   resetGame() {
     this.setState({
       squares: Array(9).fill(null),
-      xIsNext: true
+      xIsNext: true,
+      rotationIsActive: false
     });
   }
   /*handle a click on a square*/
@@ -180,24 +182,43 @@ class Game extends React.Component {
   }
 
   /*sub-board index to board index*/
-  subToBoard(n,m,p){
-    return 6*(n+3*Math.floor(p/3)) + 3*(p%3) + m
+  subToBoard(row,col,p){
+    /*
+      row = row index of the sub-board
+      col = col index of the sub-board
+      p = linear index (row-wise) of the sub-board square
+
+      this function returns the linear (row-wise) index of a square position in a sub-board,
+      given the row and column of that sub-board
+    */
+    return 6*(row+3*Math.floor(p/3)) + 3*(p%3) + col
   }
 
-  /*rotations of the squares in a sub-board*/
-  left(i) {
+  left(p) {
+    /*
+      rotations to the left of the squares in a sub-board.
+      p is the linear (row-wise) index of the "p" to be rotated.
+    */
     const arr = [1,2,5,0,4,8,3,6,7]
-    return arr[i]
+    return arr[p]
   }
 
-  right(i) {
+  right(p) {
+    /*
+      rotations to the right of the squares in a sub-board.
+      p is the linear (row-wise) index of the "p" to be rotated.
+    */
     const arr = [3,0,1,6,4,2,7,8,5]
-    return arr[i]
+    return arr[p]
   }
 
-  /*rotation of the squares in the complete board*/
+
   rotateLeft(row,col) {
-    /*row,col are the row and column indexes of the subTable*/
+    /*
+      rotation to the left of all the squares in the sub-board at
+      (row,col) in the complete board.
+    */
+
     const squares = [];
     const indexes = [];
     let p = 0;
@@ -218,7 +239,10 @@ class Game extends React.Component {
   }
 
   rotateRight(row,col) {
-    /*row,col are the row and column indexes of the subTable*/
+    /*
+      rotation to the left of all the squares in the sub-board at
+      (row,col) in the complete board.
+    */
     const squares = [];
     const indexes = [];
     let p = 0;
