@@ -32,7 +32,8 @@ body {
 }
 
 .square:hover {
-  cursor: pointer
+  cursor: pointer;
+  background: red
 }
 
 

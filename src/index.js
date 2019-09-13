@@ -14,14 +14,10 @@ function Square(props) {
 
   /*Props coming from the Board component : value, onClick, isWinner*/
 
-  const clasNames = ["square",(props.isWinner)? "square-isWinner" : "square-isLooser" ].join(" ");
+  const classNames = ["square",(props.isWinner)? "square-isWinner" : "square-isLooser" ].join(" ");
 
-  /*
-  const styleLooser = {};
-  const styleWinner = {background : "white"}
-  */
   return (
-    <button className={clasNames}
+    <button className={classNames}
             onClick = {props.onClick}
     >
       {props.value}
@@ -30,13 +26,80 @@ function Square(props) {
 }
 
 //
+function RotationButton(props){
+  /*
+    props coming from component "RotationButtonsPannel"
+    are: rotationIsActive, onClickLeft, onClickRight
+
+      -rotationIsActive: true/false
+      -onClickLeft: function that performs anticlockwise rotation in the board
+      -onClickRight: function that performs clockwise rotation in the rotation in the board
+  */
+  const classNames = ["rotationButton",(props.rotationIsActive)? "rotationButton-Active" : "rotationButton-Deactivated"].join(" ");
+
+  const symbol = ["leftt","right"]; //clock/anticlockwise arrow to be printed inside the button
+
+  return (
+    <div className = "rotationPannel-cell">
+      <button className={classNames}
+              onClick = {props.onClickLeft}
+      >
+        {symbol[0]}
+      </button>
+      <button className={classNames}
+              onClick = {props.onClickRight}
+      >
+        {symbol[1]}
+      </button>
+    </div>
+  );
+}
+
+class RotationButtonsPannel extends React.Component {
+
+  /*
+    props coming from Game:
+      -rotationIsActive: true/false
+      -onClickLeft
+      -onClickRight
+  */
+
+  renderRotationButton(row,col){
+    return (
+      <RotationButton
+        rotationIsActive = {this.props.rotationIsActive}
+        onClickLeft = {()=>this.props.onClickLeft(row,col)}
+        onClickRight = {()=>this.props.onClickRight(row,col)}
+      />
+    );
+  }
+
+
+
+
+  render(){
+    return(
+      <table className = "rotationButtonsPannel">
+        <tr>
+          <td>{this.renderRotationButton(0,0)}</td>
+          <td>{this.renderRotationButton(0,1)}</td>
+        </tr>
+        <tr>
+          <td>{this.renderRotationButton(1,0)}</td>
+          <td>{this.renderRotationButton(1,1)}</td>
+        </tr>
+      </table>
+    );
+  }
+}
+
 
 class Board extends React.Component {
 
   /*Receives from Game the props: onClick, squares*/
 
   /*Function that checks if square[i] is in the winner line*/
-  squareIsWinner(n){
+  squareIsWinner(n) {
     const lines = [
       [0,1,2,3,4],
       [1,2,3,4,5],
@@ -147,13 +210,15 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      squares: Array(9).fill(null),
+      squares: Array(36).fill(null),
       xIsNext: true,
       rotationIsActive: false
     };
     /*Bind functions*/
     this.handleClick = this.handleClick.bind(this);
-    this.resetGame = this.resetGame.bind(this)
+    this.resetGame = this.resetGame.bind(this);
+    this.rotateLeft = this.rotateLeft.bind(this);
+    this.rotateRight = this.rotateRight.bind(this);
   }
 
   /*HANDLELERS*/
@@ -161,13 +226,18 @@ class Game extends React.Component {
   /*Add a method to reset the game*/
   resetGame() {
     this.setState({
-      squares: Array(9).fill(null),
+      squares: Array(36).fill(null),
       xIsNext: true,
       rotationIsActive: false
     });
   }
   /*handle a click on a square*/
   handleClick(i) {
+
+    if (this.state.rotationIsActive){
+      return
+    }
+
     const squares = this.state.squares.slice();
 
     /*Change the state of the squares*/
@@ -177,7 +247,7 @@ class Game extends React.Component {
     squares[i] = this.state.xIsNext ? "X" : "O";
     this.setState({
       squares: squares,
-      xIsNext: !(this.state.xIsNext)
+      rotationIsActive: true
     });
   }
 
@@ -191,7 +261,13 @@ class Game extends React.Component {
       this function returns the linear (row-wise) index of a square position in a sub-board,
       given the row and column of that sub-board
     */
-    return 6*(row+3*Math.floor(p/3)) + 3*(p%3) + col
+    const i = Math.floor(p/3);
+    const j = p%3;
+
+    const I = 3*row + i;
+    const J = 3*col + j;
+
+    return (6*I + J);
   }
 
   left(p) {
@@ -199,7 +275,7 @@ class Game extends React.Component {
       rotations to the left of the squares in a sub-board.
       p is the linear (row-wise) index of the "p" to be rotated.
     */
-    const arr = [1,2,5,0,4,8,3,6,7]
+    const arr = [2,5,8,1,4,7,0,3,6]
     return arr[p]
   }
 
@@ -208,7 +284,7 @@ class Game extends React.Component {
       rotations to the right of the squares in a sub-board.
       p is the linear (row-wise) index of the "p" to be rotated.
     */
-    const arr = [3,0,1,6,4,2,7,8,5]
+    const arr = [6,3,0,7,4,1,8,5,2]
     return arr[p]
   }
 
@@ -219,6 +295,11 @@ class Game extends React.Component {
       (row,col) in the complete board.
     */
 
+    /*Do nothing if rotationIsActive=false or winner = true*/
+    if(!this.state.rotationIsActive || calculateWinner(this.state.squares)){
+      return
+    }
+
     const squares = [];
     const indexes = [];
     let p = 0;
@@ -226,16 +307,15 @@ class Game extends React.Component {
     for(let i = 0;i<9;i++){
       indexes.push(this.subToBoard(row,col,i));
     }
-
     for(let n = 0;n<36;n++){
       if (indexes.includes(n)){
-        squares.push(this.squares[this.subToBoard(row,col,this.left(p))]);
+        squares.push(this.state.squares[this.subToBoard(row,col,this.left(p))]);
         p++;
       } else {
-        squares.push(this.squares[n]);
+        squares.push(this.state.squares[n]);
       }
-      this.setState({squares: squares})
     }
+    this.setState({squares: squares,rotationIsActive: false,xIsNext: !(this.state.xIsNext)})
   }
 
   rotateRight(row,col) {
@@ -243,6 +323,12 @@ class Game extends React.Component {
       rotation to the left of all the squares in the sub-board at
       (row,col) in the complete board.
     */
+
+    /*Do nothing if rotationIsActive=false or winner = true*/
+    if(!this.state.rotationIsActive || calculateWinner(this.state.squares)){
+      return
+    }
+
     const squares = [];
     const indexes = [];
     let p = 0;
@@ -253,13 +339,14 @@ class Game extends React.Component {
 
     for(let n = 0;n<36;n++){
       if (indexes.includes(n)){
-        squares.push(this.squares[this.subToBoard(row,col,this.right(p))]);
+        squares.push(this.state.squares[this.subToBoard(row,col,this.right(p))]);
         p++;
       } else {
-        squares.push(this.squares[n]);
+        squares.push(this.state.squares[n]);
       }
-      this.setState({squares: squares})
     }
+    this.setState({squares: squares,rotationIsActive: false,xIsNext: !(this.state.xIsNext)})
+
   }
 
 
@@ -278,8 +365,10 @@ class Game extends React.Component {
       status = "Winner: " + winner;
     } else if (!squares.includes(null)) {
       status = "It's a tie!!!"
-    } else {
+    } else if (!this.state.rotationIsActive) {
       status = "Next player: " + (this.state.xIsNext ? "X" : "O");
+    } else {
+      status = "Player " + (this.state.xIsNext ? "X" : "O") + ": Rotate a sub-board";
     }
 
     return (
@@ -295,6 +384,11 @@ class Game extends React.Component {
                   Reset
               </button>
             </div>
+            <RotationButtonsPannel
+              rotationIsActive={this.state.rotationIsActive}
+              onClickLeft = {this.rotateLeft}
+              onClickRight = {this.rotateRight}
+            />
           </div>
         </div>
         <div className="game-info">
