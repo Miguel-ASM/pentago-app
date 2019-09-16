@@ -4,13 +4,13 @@ body {
   background: DodgerBlue
 }
 
-
+/*
 /*CSS attributes of the square*/
 .square {
-  border: 2.5px solid black;
+  border: 2.5px solid white;
   font: "Comic Sans MS", cursive, sans-serif;
   float: left;
-  font-size: 100px;
+  font-size: 75px;
   font-weight: bold;
   line-height: 34px;
   height: 75px;
@@ -22,23 +22,23 @@ body {
 }
 
 .square.square-isWinner {
-  background: white;
+  background: green;
 }
 
 .square.square-isLooser {
-  background: green;
+  background: red;
 }
 
 .square:focus {
   outline: none;
 }
 
-.square:hover {
+.square.square-isLooser:hover {
   cursor: pointer;
-  background: red
-}
+  background: green
+} */
 
-
+/*
 /*CSS attributes of the tables*/
 td{
   padding:0 ;
@@ -51,9 +51,38 @@ table {
 }
 
 table.subTable {
-  border:5px solid
+  border:5px solid white
 }
 
 table.Table {
-  border: 0px solid
+  border: 0px solid white;
+} */
+
+
+/*Grid templates and containers*/
+
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr;
+  grid-template-rows: 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr;
+  grid-template-areas: ". button-00-clock . button-01-anti ." "button-00-anti board board board button-01-clock" ". board board board ." "button-10-clock board board board button-11-anti" ". button-10-anti . button-11-clock .";
 }
+
+.board { grid-area: board; }
+
+.button-00-anti { grid-area: button-00-anti; }
+
+.button-00-clock { grid-area: button-00-clock; }
+
+.button-01-anti { grid-area: button-01-anti; }
+
+.button-01-clock { grid-area: button-01-clock; }
+
+.button-10-clock { grid-area: button-10-clock; }
+
+.button-10-anti { grid-area: button-10-anti; }
+
+.button-11-clock { grid-area: button-11-clock; }
+
+.button-11-anti { grid-area: button-11-anti; }
