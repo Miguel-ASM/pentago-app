@@ -135,16 +135,17 @@ class Board extends React.Component {
 
     // Outer loop to create each line
     for (let i = 0; i < 3; i++) {
-      let subRow = []
       //Inner loop to create children
       for (let j = 0; j < 3; j++) {
         num = 6*(3*n+i) + 3*m + j;
-        subRow.push(<td>{this.renderSquare(num)}</td>)
+        subTable.push(<div className ="s${Math.floor(n/3)+m%3}">{this.renderSquare(num)}</div>)
       }
-      //Create the parent and add the children
-      subTable.push(<tr className="subtable-row">{subRow}</tr>)
     }
-    return (<table className = "subTable">{subTable}</table>)
+    return (
+      <div className = "board-${n}${m}">
+        {subTable}
+      </div>
+    )
   }
 
   createTable(){
@@ -152,22 +153,21 @@ class Board extends React.Component {
 
     // Outer loop to create each line
     for (let n = 0; n < 2; n++) {
-      let row = []
       //Inner loop to create children
       for (let m = 0; m < 2; m++) {
-        row.push(<td>{this.createSubTable(n,m)}</td>)
+        board.push({this.createSubTable(n,m)})
       }
-      //Create the parent and add the children
-      board.push(<tr className="board-row">{row}</tr>)
     }
-    return board
+    return(
+      <div className="board">
+        {board}
+      </div>
+    )
   }
 
   render() {
     return(
-      <table>
         {this.createTable()}
-      </table>
     )
   }
 

@@ -6,7 +6,7 @@ html, body, .grid-container { height: 100%; margin: 0; }
 }
 
 .grid-container *:after {
- content:attr(class);
+ /* content:attr(class); */
  position: absolute;
  top: 0;
  left: 0;
