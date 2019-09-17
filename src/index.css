@@ -1,16 +1,23 @@
 /*CSS attributes of the body*/
 body {
   padding: 50px;
-  background: DodgerBlue
+  background: DodgerBlue;
 }
 
-/*
+
+/*CSS properties of the gameStatus*/
+
+.gameStatus > h1  {
+    text-align: center;
+    font-family: "Comic Sans MS";
+}
+
+
 /*CSS attributes of the square*/
 .square {
-  border: 2.5px solid white;
-  font: "Comic Sans MS", cursive, sans-serif;
+  border: 1px solid white;
   float: left;
-  font-size: 75px;
+  font-size: 50px;
   font-weight: bold;
   line-height: 34px;
   height: 75px;
@@ -19,6 +26,7 @@ body {
   padding: 0;
   text-align: center;
   width: 75px;
+  border-radius: 10px;
 }
 
 .square.square-isWinner {
@@ -36,53 +44,212 @@ body {
 .square.square-isLooser:hover {
   cursor: pointer;
   background: green
-} */
-
-/*
-/*CSS attributes of the tables*/
-td{
-  padding:0 ;
-}
-tr{
-  padding:0 ;
-}
-table {
-  border-collapse: collapse;
 }
 
-table.subTable {
-  border:5px solid white
+/*CSS style of the rotation Buttons*/
+.rotationButton {
+
 }
 
-table.Table {
-  border: 0px solid white;
-} */
+.rotationButton-Active {
+    background: green;
+}
 
+.rotationButton-Deactivated {
+    background: lightgrey;
+}
 
 /*Grid templates and containers*/
 
-
-.grid-container {
-  display: grid;
-  grid-template-columns: 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr;
-  grid-template-rows: 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr;
-  grid-template-areas: ". button-00-clock . button-01-anti ." "button-00-anti board board board button-01-clock" ". board board board ." "button-10-clock board board board button-11-anti" ". button-10-anti . button-11-clock .";
+.grid-container  {
+ border: 10px solid black;
+ background: white;
+ position: absolute;
+ display: grid;
+ grid-template-columns: 50px 500px 50px;
+ grid-template-rows: 50px 500px 50px;
+ grid-template-areas: ". top-area ." "left-area board right-area" ". bottom-area .";
 }
 
-.board { grid-area: board; }
+.board {
+    display: grid;
+    grid-template-columns: 250px 250px;
+    grid-template-rows: 250px 250px;
+    grid-template-areas: "board-00 board-01" "board-10 board-11";
+    grid-area: board;
+    grid-gap: 1px;
+}
 
-.button-00-anti { grid-area: button-00-anti; }
+.board-00 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas: "s0 s1 s2" "s3 s4 s5" "s6 s7 s8";
+    grid-area: board-00;
+}
 
-.button-00-clock { grid-area: button-00-clock; }
+.s0 { grid-area: s0; }
+
+.s1 { grid-area: s1; }
+
+.s2 { grid-area: s2; }
+
+.s3 { grid-area: s3; }
+
+.s4 { grid-area: s4; }
+
+.s5 { grid-area: s5; }
+
+.s6 { grid-area: s6; }
+
+.s7 { grid-area: s7; }
+
+.s8 { grid-area: s8; }
+
+.board-01 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas: "s0 s1 s2" "s3 s4 s5" "s6 s7 s8";
+  grid-area: board-01;
+}
+
+.s0 { grid-area: s0; }
+
+.s1 { grid-area: s1; }
+
+.s2 { grid-area: s2; }
+
+.s3 { grid-area: s3; }
+
+.s4 { grid-area: s4; }
+
+.s5 { grid-area: s5; }
+
+.s6 { grid-area: s6; }
+
+.s7 { grid-area: s7; }
+
+.s8 { grid-area: s8; }
+
+.board-10 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas: "s0 s1 s2" "s3 s4 s5" "s6 s7 s8";
+  grid-area: board-10;
+}
+
+.s0 { grid-area: s0; }
+
+.s1 { grid-area: s1; }
+
+.s2 { grid-area: s2; }
+
+.s3 { grid-area: s3; }
+
+.s4 { grid-area: s4; }
+
+.s5 { grid-area: s5; }
+
+.s6 { grid-area: s6; }
+
+.s7 { grid-area: s7; }
+
+.s8 { grid-area: s8; }
+
+.board-11 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas: "s0 s1 s2" "s3 s4 s5" "s6 s7 s8";
+  grid-area: board-11;
+}
+
+.s0 { grid-area: s0; }
+
+.s1 { grid-area: s1; }
+
+.s2 { grid-area: s2; }
+
+.s3 { grid-area: s3; }
+
+.s4 { grid-area: s4; }
+
+.s5 { grid-area: s5; }
+
+.s6 { grid-area: s6; }
+
+.s7 { grid-area: s7; }
+
+.s8 { grid-area: s8; }
+
+.top-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "button-00-clock . . . . . . . . button-01-anti";
+  grid-area: top-area;
+}
 
 .button-01-anti { grid-area: button-01-anti; }
 
-.button-01-clock { grid-area: button-01-clock; }
+.button-00-clock { grid-area: button-00-clock; }
 
-.button-10-clock { grid-area: button-10-clock; }
-
-.button-10-anti { grid-area: button-10-anti; }
+.bottom-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "button-10-anti . . . . . . . . button-11-clock";
+  grid-area: bottom-area;
+}
 
 .button-11-clock { grid-area: button-11-clock; }
 
+.button-10-anti { grid-area: button-10-anti; }
+
+.left-area {
+  display: grid;
+  grid-template-columns: 50px;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-areas: "button-00-anti" "." "." "." "." "." "." "." "." "button-10-clock";
+  grid-area: left-area;
+}
+
+.button-00-anti { grid-area: button-00-anti; }
+
+.button-10-clock { grid-area: button-10-clock; }
+
+.right-area {
+  display: grid;
+  grid-template-columns: 50px;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-areas: "button-10-clock" "." "." "." "." "." "." "button-11-anti";
+  grid-area: right-area;
+}
+
+.button-10-clock { grid-area: button-10-clock; }
+
 .button-11-anti { grid-area: button-11-anti; }
+
+
+/*CSS style of  rotate buttons*/
+.rotationButton {
+  background-color: green;
+  color: white;
+  border-radius: 10px;
+  border: 0px solid green;
+  font-weight: bold;
+  font-size: 30px
+}
+
+.rotationButton:hover {
+    cursor: pointer;
+    background-color: white;
+    color: green;
+}
+
+
+.rotationButton:focus {
+  outline: none;
+}

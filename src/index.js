@@ -20,47 +20,53 @@ function Square(props) {
     <button className={classNames}
             onClick = {props.onClick}
     >
-      {props.value}
+        {props.value}
     </button>
   );
 }
 
 function RotationButtonAnti(props){
   /*
-    props coming from component "RotationButtonsPannel"
+    props coming from component "Game"
     are: rotationIsActive, onClick, [n,m]
 
       -rotationIsActive: true/false
       -onClick: function that performs anticlockwise rotation in the board
       -[n,m]: indexes of the sub-board
   */
-  const classNames = ["rotationButton",(props.rotationIsActive)? "rotationButton-Active" : "rotationButton-Deactivated"].join(" ");
+
+  if (!props.rotationIsActive){
+      return (<div></div>)
+  }
 
   return (
-    <button className={classNames}
+    <button className="rotationButton"
         onClick = {()=>props.onClick(props.n,props.m)}
     >
-        ANTI
+        &#10226;
     </button>
   );
 }
 
 function RotationButtonClock(props){
   /*
-    props coming from component "RotationButtonsPannel"
+    props coming from component "Game"
     are: rotationIsActive, onClick, [n,m]
 
       -rotationIsActive: true/false
       -onClick: function that performs clockwise rotation in the board
       -[n,m]: indexes of the sub-board
   */
-  const classNames = ["rotationButton",(props.rotationIsActive)? "rotationButton-Active" : "rotationButton-Deactivated"].join(" ");
+
+  if (!props.rotationIsActive){
+      return (<div></div>)
+  }
 
   return (
-    <button className={classNames}
+    <button className="rotationButton"
         onClick = {()=>props.onClick(props.n,props.m)}
     >
-        CLOCK
+        &#10227;
     </button>
   );
 }
@@ -128,9 +134,9 @@ class Board extends React.Component {
 
 
   /* Function to create the SubTable*/
-  createSubTable(n,m) {
+  createSubBoard(n,m) {
     /*n,m are the subtable indexes*/
-    let subTable = []
+    let subBoard = []
     let num;
 
     // Outer loop to create each line
@@ -138,36 +144,34 @@ class Board extends React.Component {
       //Inner loop to create children
       for (let j = 0; j < 3; j++) {
         num = 6*(3*n+i) + 3*m + j;
-        subTable.push(<div className ="s${Math.floor(n/3)+m%3}">{this.renderSquare(num)}</div>)
+        subBoard.push(<div className ="s${Math.floor(n/3)+m%3}">{this.renderSquare(num)}</div>)
       }
     }
     return (
       <div className = "board-${n}${m}">
-        {subTable}
+        {subBoard}
       </div>
     )
   }
 
-  createTable(){
+  createBoard(){
     let board = []
 
     // Outer loop to create each line
     for (let n = 0; n < 2; n++) {
       //Inner loop to create children
       for (let m = 0; m < 2; m++) {
-        board.push({this.createSubTable(n,m)})
+        board.push(this.createSubBoard(n,m));
       }
     }
     return(
-      <div className="board">
-        {board}
-      </div>
+        board
     )
   }
 
   render() {
     return(
-        {this.createTable()}
+        this.createBoard()
     )
   }
 
@@ -216,10 +220,18 @@ class Game extends React.Component {
       return;
     }
     squares[i] = this.state.xIsNext ? "X" : "O";
-    this.setState({
-      squares: squares,
-      rotationIsActive: true
-    });
+
+    if (!calculateWinner(squares)){
+        this.setState({
+          squares: squares,
+          rotationIsActive: true
+        });
+    } else {
+        this.setState({
+          squares: squares,
+          rotationIsActive: false
+        });
+    }
   }
 
   /*sub-board index to board index*/
@@ -345,78 +357,92 @@ class Game extends React.Component {
     return (
         <div className="game">
             <div className="gameStatus">
-                    {status}
+                <h1>{status}</h1>
             </div>
+            {/*CONTAINER FOR THE BOARD AND ROTATE BUTTONS*/}
             <div className="grid-container">
+                {/*board container*/}
                 <div class="board">
                     <Board
                       squares={squares}
                       onClick={this.handleClick}
                     />
                 </div>
-                <div class="button-00-anti">
-                    <RotationButtonAnti
-                        n={0}
-                        m={0}
-                        rotationIsActive = {this.state.rotationIsActive}
-                        onClick = {this.rotateLeft}
-                    />
+                {/*container for buttons on top area*/}
+                <div className="top-area">
+                    <div class="button-00-clock">
+                        <RotationButtonClock
+                            n={0}
+                            m={0}
+                            rotationIsActive = {this.state.rotationIsActive}
+                            onClick = {this.rotateRight}
+                        />
+                    </div>
+                    <div class="button-01-anti">
+                        <RotationButtonAnti
+                            n={0}
+                            m={1}
+                            rotationIsActive = {this.state.rotationIsActive}
+                            onClick = {this.rotateLeft}
+                        />
+                    </div>
+                {/*container for buttons on bottom area*/}
                 </div>
-                <div class="button-00-clock">
-                    <RotationButtonClock
-                        n={0}
-                        m={0}
-                        rotationIsActive = {this.state.rotationIsActive}
-                        onClick = {this.rotateRight}
-                    />
+                <div className="bottom-area">
+                    <div class="button-10-anti">
+                        <RotationButtonAnti
+                            n={1}
+                            m={0}
+                            rotationIsActive = {this.state.rotationIsActive}
+                            onClick = {this.rotateLeft}
+                        />
+                    </div>
+                    <div class="button-11-clock">
+                        <RotationButtonClock
+                            n={1}
+                            m={1}
+                            rotationIsActive = {this.state.rotationIsActive}
+                            onClick = {this.rotateRight}
+                        />
+                    </div>
                 </div>
-                <div class="button-01-anti">
-                    <RotationButtonAnti
-                        n={0}
-                        m={1}
-                        rotationIsActive = {this.state.rotationIsActive}
-                        onClick = {this.rotateLeft}
-                    />
+                {/*container for buttons on left area*/}
+                <div className="left-area">
+                    <div class="button-00-anti">
+                        <RotationButtonAnti
+                            n={0}
+                            m={0}
+                            rotationIsActive = {this.state.rotationIsActive}
+                            onClick = {this.rotateLeft}
+                        />
+                    </div>
+                    <div class="button-10-clock">
+                        <RotationButtonClock
+                            n={1}
+                            m={0}
+                            rotationIsActive = {this.state.rotationIsActive}
+                            onClick = {this.rotateRight}
+                        />
+                    </div>
                 </div>
-                <div class="button-01-clock">
-                    <RotationButtonClock
-                        n={0}
-                        m={1}
-                        rotationIsActive = {this.state.rotationIsActive}
-                        onClick = {this.rotateRight}
-                    />
-                </div>
-                <div class="button-10-anti">
-                    <RotationButtonAnti
-                        n={1}
-                        m={0}
-                        rotationIsActive = {this.state.rotationIsActive}
-                        onClick = {this.rotateLeft}
-                    />
-                </div>
-                <div class="button-10-clock">
-                    <RotationButtonClock
-                        n={1}
-                        m={0}
-                        rotationIsActive = {this.state.rotationIsActive}
-                        onClick = {this.rotateRight}
-                    />
-                </div>
-                <div class="button-11-anti">
-                    <RotationButtonAnti
-                        n={1}
-                        m={1}
-                        rotationIsActive = {this.state.rotationIsActive}
-                        onClick = {this.rotateLeft}
-                    />
-                </div>
-                <div class="button-11-clock">
-                    <RotationButtonClock
-                        n={1}
-                        m={1}
-                        rotationIsActive = {this.state.rotationIsActive}
-                        onClick = {this.rotateRight}
-                    />
+                {/*container for buttons on right area*/}
+                <div className="right-area">
+                    <div class="button-01-clock">
+                        <RotationButtonClock
+                            n={0}
+                            m={1}
+                            rotationIsActive = {this.state.rotationIsActive}
+                            onClick = {this.rotateRight}
+                        />
+                    </div>
+                    <div class="button-11-anti">
+                        <RotationButtonAnti
+                            n={1}
+                            m={1}
+                            rotationIsActive = {this.state.rotationIsActive}
+                            onClick = {this.rotateLeft}
+                        />
+                    </div>
                 </div>
             </div>
             <div className="reset-button">
