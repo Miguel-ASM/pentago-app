@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/pentago-app/precache-manifest.53ddbefdc588b771a2e23a9670e63a27.js"
+  "/pentago-app/precache-manifest.b3d6fb862dd98b9a375782d92d059842.js"
 );
 
 self.addEventListener('message', (event) => {

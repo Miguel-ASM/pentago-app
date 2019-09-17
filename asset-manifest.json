@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/pentago-app/static/css/main.41087ef1.chunk.css",
-    "main.js": "/pentago-app/static/js/main.9813f005.chunk.js",
-    "main.js.map": "/pentago-app/static/js/main.9813f005.chunk.js.map",
+    "main.css": "/pentago-app/static/css/main.43495ddd.chunk.css",
+    "main.js": "/pentago-app/static/js/main.16b440e4.chunk.js",
+    "main.js.map": "/pentago-app/static/js/main.16b440e4.chunk.js.map",
     "runtime~main.js": "/pentago-app/static/js/runtime~main.24d883d8.js",
     "runtime~main.js.map": "/pentago-app/static/js/runtime~main.24d883d8.js.map",
-    "static/js/2.38d2b725.chunk.js": "/pentago-app/static/js/2.38d2b725.chunk.js",
-    "static/js/2.38d2b725.chunk.js.map": "/pentago-app/static/js/2.38d2b725.chunk.js.map",
+    "static/js/2.8eaf0049.chunk.js": "/pentago-app/static/js/2.8eaf0049.chunk.js",
+    "static/js/2.8eaf0049.chunk.js.map": "/pentago-app/static/js/2.8eaf0049.chunk.js.map",
     "index.html": "/pentago-app/index.html",
-    "precache-manifest.53ddbefdc588b771a2e23a9670e63a27.js": "/pentago-app/precache-manifest.53ddbefdc588b771a2e23a9670e63a27.js",
+    "precache-manifest.b3d6fb862dd98b9a375782d92d059842.js": "/pentago-app/precache-manifest.b3d6fb862dd98b9a375782d92d059842.js",
     "service-worker.js": "/pentago-app/service-worker.js",
-    "static/css/main.41087ef1.chunk.css.map": "/pentago-app/static/css/main.41087ef1.chunk.css.map"
+    "static/css/main.43495ddd.chunk.css.map": "/pentago-app/static/css/main.43495ddd.chunk.css.map"
   }
 }

@@ -1,2 +1,0 @@
-body{padding:50px}.square{border:2.5px solid #000;font:Comic Sans MS,cursive,sans-serif;float:left;font-size:100px;font-weight:700;line-height:34px;height:75px;margin-right:0;margin-top:0;padding:0;text-align:center;width:75px}.square.square-isWinner{background:#fff}.square.square-isLooser{background:green}.square:focus{outline:none}.square:hover{cursor:pointer;background:red}td,tr{padding:0}table{border-collapse:collapse}table.subTable{border:5px solid}table.Table{border:0 solid}
-/*# sourceMappingURL=main.41087ef1.chunk.css.map */
