@@ -9,6 +9,7 @@ body {
 
 .gameStatus > h1  {
     text-align: center;
+    color: white;
     font-family: "Comic Sans MS";
 }
 
@@ -251,5 +252,27 @@ body {
 
 
 .rotationButton:focus {
+  outline: none;
+}
+
+
+/*CSS style of  resetGame button*/
+.reset-button  {
+  background-color: green;
+  color: white;
+  border-radius: 10px;
+  border: 0px solid green;
+  font-family: "Comic Sans MS";
+  font-size: 30px
+}
+
+.reset-button:hover {
+    cursor: pointer;
+    background-color: white;
+    color: green;
+}
+
+
+.reset-button:focus {
   outline: none;
 }

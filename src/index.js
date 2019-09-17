@@ -359,6 +359,14 @@ class Game extends React.Component {
             <div className="gameStatus">
                 <h1>{status}</h1>
             </div>
+            <div>
+                <button
+                    className="reset-button"
+                    onClick = {this.resetGame}
+                >
+                  reset
+              </button>
+            </div>
             {/*CONTAINER FOR THE BOARD AND ROTATE BUTTONS*/}
             <div className="grid-container">
                 {/*board container*/}
@@ -444,11 +452,6 @@ class Game extends React.Component {
                         />
                     </div>
                 </div>
-            </div>
-            <div className="reset-button">
-              <button onClick = {this.resetGame}>
-                  Reset
-              </button>
             </div>
         </div>
     );
