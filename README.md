@@ -1,7 +1,6 @@
 # Pentago: an online app version of the connect 5 game
 
- I develop an easy implementation of the [Pentago](https://en.wikipedia.org/wiki/Pentago) board game using  `react.js`. The source code is divided in a script and css style files named `index.css` and `index.js`. `index.js` is based on the example in the [react tutorial](https://es.reactjs.org/tutorial/tutorial.html).
- 
+ I developed an simple implementation of the [Pentago](https://en.wikipedia.org/wiki/Pentago) board game using  `react.js`. The source code is divided in a script and css style files named `index.css` and `index.js`. `index.js` is based on the example in the [react tutorial](https://es.reactjs.org/tutorial/tutorial.html). You can find it deployed [here!](https://miguel-asm.github.io/pentago-app/)
  
  
  
@@ -24,3 +23,5 @@
 alt="Pentago" width="240" height="180" border="10" />
   <figcaption>The Pentago board</figcaption>
 </figure>
+
+
